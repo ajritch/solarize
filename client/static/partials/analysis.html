@@ -1,0 +1,20 @@
+<div ng-controller = "AnalysisController">
+	<h1>Performance Analysis</h1>
+	<h4>System Size: <span ng-bind = 'systemSize'></span>kW</h4>
+	
+	<h4>Annual Energy Production (AC): <span ng-bind = 'annualProduction'></span>kWh</h4>
+	<h3>Monthly Energy Production (AC):</h3>
+	<canvas height = "100px" class = 'chart chart-bar' chart-data = "monthData" chart-labels = "monthLabels" chart-series = "monthSeries">
+	</canvas>
+
+	<h1>Financial Analysis</h1>
+	<h4>System Cost: $<span ng-bind = 'systemCost'></span></h4>
+	<h4>Utility Cost: $<input type = "number" ng-model = 'utilityRate' min = "0" step = "0.01" ng-change = "updateSavings()"> /kWh</h4>
+	<h4>Annual Energy Savings: $<span ng-bind = "annualEnergySavings"></span></h4>
+	<h4>Payback Period: <span ng-bind = "paybackPeriod"></span> years</h4>
+	<h3>Cumulative Cashflow:</h3>
+	<canvas height = "100px" class = 'chart chart-bar' chart-data = "cashflowData" chart-labels = "cashflowLabels" chart-series = "cashflowSeries">
+	</canvas>
+
+	<button class = 'btn btn-primary' ng-click = "backToDesign()">Design New System</button>
+</div>

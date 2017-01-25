@@ -1,0 +1,23 @@
+{
+  "name": "solarize",
+  "homepage": "https://github.com/ajritch/solarize",
+  "authors": [
+    "Annie Ritch <ritchaj@gmail.com>"
+  ],
+  "description": "",
+  "main": "",
+  "license": "MIT",
+  "private": true,
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "bower_components",
+    "test",
+    "tests"
+  ],
+  "dependencies": {
+    "angular-route": "^1.6.1",
+    "angular": "^1.6.1",
+    "angular-chart.js": "^1.1.1"
+  }
+}
