@@ -1,4 +1,8 @@
-node_modules
-bower_components
+
+/node_modules
+/bower_components
 api-def.js
+bundle.js
+npm-debug.log
+.DS_STORE
 

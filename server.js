@@ -1,11 +1,14 @@
-var express = require('express');
-var path = require('path');
+const express = require('express');
+const path = require('path');
+const port = process.env.PORT || 8080;
 
-var app = express();
+const app = express();
 
-app.use(express.static(path.join(__dirname, './client')));
-app.use(express.static(path.join(__dirname, './bower_components')));
+app.use(express.static(__dirname));
 
-app.listen(7001, function() {
-	console.log('listening on port 7001');
+app.get('*', (req, res) => {
+	res.sendFile(path.resolve(__dirname, 'index.html'))
 });
+
+app.listen(port);
+console.log('server listening on port 8080');
