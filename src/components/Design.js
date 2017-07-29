@@ -1,5 +1,6 @@
 import React, {Component} from 'react';
 import {connect} from 'react-redux';
+import {reduxForm} from 'redux-form';
 
 import Map from './Map';
 import RoofFaceDetails from './RoofFaceDetails';
@@ -32,6 +33,11 @@ class Design extends Component {
 				</div>
 				<div className = "col-sm-6">
 					{this.renderRoofDetails()}
+
+					{this.props.roofFaces.length > 0 ?
+						<p>show button</p>
+						: ''
+					}
 				</div>
 
 			</div>
@@ -45,4 +51,6 @@ function mapStateToProps(state) {
 	}
 }
 
-export default connect(mapStateToProps, {})(Design);
+export default connect(mapStateToProps, {})(reduxForm({
+	form: 'roofDetailsForm'
+})(Design));

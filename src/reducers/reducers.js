@@ -1,11 +1,12 @@
 import {combineReducers} from 'redux';
+import {reducer as formReducer} from 'redux-form'
 
 import roofFacesReducer from './reducer_roof_faces'
 
 const rootReducer = combineReducers({
 
-	//replace this with other reducers, once created
-	roofFaces: roofFacesReducer
+	roofFaces: roofFacesReducer,
+	form: formReducer
 });
 
 export default rootReducer;
