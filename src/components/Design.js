@@ -12,7 +12,7 @@ class Design extends Component {
 
 	renderRoofDetails() {
 		return this.props.roofFaces.map(face => {
-			console.log("Face", face)
+			// console.log("Face", face)
 			return (
 				<RoofFaceDetails key = {face.id} face = {face} />
 			);

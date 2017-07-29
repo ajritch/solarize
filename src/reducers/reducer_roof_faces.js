@@ -1,13 +1,15 @@
 import _ from 'lodash';
 
 import {ADD_ROOF_FACE, EDIT_AZIMUTH_TILT} from '../actions/actions';
+import {updateFaceSpecs} from '../utils/analysisFunctions';
 
 const INITIAL_STATE = [];
 
 export default function(state = INITIAL_STATE, action) {
 	switch(action.type) {
 		case ADD_ROOF_FACE:
-			return [...state, action.payload];
+			var face = updateFaceSpecs(action.payload);
+			return [...state, face];
 
 		case EDIT_AZIMUTH_TILT:
 			const info = action.payload;
