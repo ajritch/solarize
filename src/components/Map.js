@@ -51,7 +51,10 @@ class Map extends Component {
 		//add new face!
 		var face = {};
 		face.area = area;
-		face.id = this.props.roofFaces.length + 1;
+
+		console.log(this.props.roofFaces.length)
+		face.id = this.props.roofFaces.length > 0 ? this.props.roofFaces.length + 1 : 1;
+
 
 		//TODO: change to lat/lon of polygon center
 		//for not just using coords of first vertex

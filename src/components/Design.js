@@ -1,6 +1,7 @@
 import React, {Component} from 'react';
 import {connect} from 'react-redux';
 import {reduxForm} from 'redux-form';
+import {Link} from 'react-router';
 
 import Map from './Map';
 import RoofFaceDetails from './RoofFaceDetails';
@@ -11,6 +12,7 @@ class Design extends Component {
 
 	renderRoofDetails() {
 		return this.props.roofFaces.map(face => {
+			console.log("Face", face)
 			return (
 				<RoofFaceDetails key = {face.id} face = {face} />
 			);
@@ -35,7 +37,11 @@ class Design extends Component {
 					{this.renderRoofDetails()}
 
 					{this.props.roofFaces.length > 0 ?
-						<p>show button</p>
+						<div>
+							<Link to = '/analysis'>
+								Get Design Analysis
+							</Link>
+						</div>
 						: ''
 					}
 				</div>
@@ -54,3 +60,4 @@ function mapStateToProps(state) {
 export default connect(mapStateToProps, {})(reduxForm({
 	form: 'roofDetailsForm'
 })(Design));
+

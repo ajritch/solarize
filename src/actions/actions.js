@@ -13,7 +13,7 @@ export function addRoofFace(roofFace) {
 	}
 }
 
-export function editAzimuthTilt() {
+export function editAzimuthTilt(info) {
 	console.log("editRoofFace:", info)
 	return {
 		type: EDIT_AZIMUTH_TILT,
