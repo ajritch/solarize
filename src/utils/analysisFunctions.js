@@ -13,12 +13,22 @@ export function getSystemSize(area) {
 	return size;
 }
 
+//system size in kWh
 export function getTotalSystemSize(faces) {
-	var size = 0;
+	var area = 0;
 	for (var i in faces) {
-		size += faces[i].area;
+		area += faces[i].area;
 	}
-	return size;
+	return getSystemSize(area);
+}
+
+//gets system cost (ouputs dollars)
+export function getTotalSystemCost(faces) {
+	var area = 0;
+	for (var i in faces) {
+		area += faces[i].area;
+	}
+	return getSystemSize(area) * 1000 * COST_PER_WATT; //$
 }
 
 export function updateFaceSpecs(face) {
@@ -26,5 +36,18 @@ export function updateFaceSpecs(face) {
 	face.systemSize = getSystemSize(face.npanels * PANEL_AREA);
 
 	return face;
+}
+
+//annual energy savings
+//inputs: roofFaces, utility rate ($/kWh)
+export function getEnergySavings(ac_annual, utilityRate) {
+	return ac_annual * utilityRate;
+}
+
+//payback period (years)
+export function getPaybackPeriod(faces, ac_annual, utilityRate) {
+	var cost = getTotalSystemCost(faces);
+	var savings = getEnergySavings(ac_annual, utilityRate);
+	return cost / savings;
 }
 

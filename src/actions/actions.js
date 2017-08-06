@@ -4,6 +4,7 @@ import qs from 'qs';
 export const ADD_ROOF_FACE = 'ADD_ROOF_FACE';
 export const EDIT_AZIMUTH_TILT = 'EDIT_AZIMUTH_TILT';
 export const EVALUATE_PERFORMANCE = 'EVALUATE_PERFORMANCE';
+export const UPDATE_UTILITY_RATE = 'UPDATE_UTILITY_RATE';
 
 //function to add new roof face
 export function addRoofFace(roofFace) {
@@ -46,5 +47,15 @@ export function evaluatePerformance(face) {
 	return {
 		type: EVALUATE_PERFORMANCE,
 		payload: request
+	}
+}
+
+//update the utility rate
+export function updateUtilityRate(rate) {
+	console.log("updateUtilityRate:", rate);
+	
+	return {
+		type: UPDATE_UTILITY_RATE,
+		payload: rate
 	}
 }

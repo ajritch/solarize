@@ -1,23 +1,20 @@
 import React, {Component} from 'react';
 import {connect} from 'react-redux';
-import {browserHistory} from 'react-router';
+import {browserHistory, Link} from 'react-router';
 import {AreaChart, Area, XAxis, YAxis, CartesianGrid, Tooltip} from 'recharts';
+import {reduxForm, Field} from 'redux-form';
 
-import {evaluatePerformance} from '../actions/actions';
-import {getTotalSystemSize} from '../utils/analysisFunctions'
-
-const data = [
-      {name: 'Page A', uv: 4000, pv: 2400, amt: 2400},
-      {name: 'Page B', uv: 3000, pv: 1398, amt: 2210},
-      {name: 'Page C', uv: 2000, pv: 9800, amt: 2290},
-      {name: 'Page D', uv: 2780, pv: 3908, amt: 2000},
-      {name: 'Page E', uv: 1890, pv: 4800, amt: 2181},
-      {name: 'Page F', uv: 2390, pv: 3800, amt: 2500},
-      {name: 'Page G', uv: 3490, pv: 4300, amt: 2100},
-];
+import {evaluatePerformance, updateUtilityRate} from '../actions/actions';
+import {getTotalSystemSize, getTotalSystemCost, getEnergySavings, getPaybackPeriod} from '../utils/analysisFunctions'
 
 
 class Analysis extends Component {
+
+	constructor(props) {
+		super(props);
+
+		this.handleUtilityRateChange = this.handleUtilityRateChange.bind(this);
+	}
 
 	componentDidMount() {
 		const {roofFaces} = this.props;
@@ -40,18 +37,23 @@ class Analysis extends Component {
 		}
 	}
 
+	handleUtilityRateChange(event) {
+		// console.log(event.target.value)
+		this.props.updateUtilityRate(event.target.value);
+	}
+
 	render() {
-		console.log("AC_MONTHLY", this.props.ac_monthly)
-		console.log(data)
+
+		// console.log(this.props)
+		
 		return (
 			<div className = 'analysis-page'>
+
 				<h1>Performance Analysis</h1>
-
 				<h4>SystemSize: {getTotalSystemSize(this.props.roofFaces)}kW</h4>
-
 				<h4>Annual Energy Production (AC): {this.props.ac_annual}kWh</h4>
-				<h4>Monthly Energy Production (AC):</h4>
 
+				<h4>Monthly Energy Production (AC):</h4>
 				<AreaChart
 					height = {300}
 					width = {800}
@@ -64,6 +66,26 @@ class Analysis extends Component {
 					<Area type = 'monotone' dataKey = 'production' stroke = '#207068' fill = '#629a95' />
 				</AreaChart>
 
+				<h1>Financial Analysis</h1>
+				<h4>System Cost: ${getTotalSystemCost(this.props.roofFaces)}</h4>
+				<h4>Utility Cost: $
+					<Field
+						name = 'utility_rate'
+						component = 'input'
+						type = 'number'
+						onBlur = {this.handleUtilityRateChange}
+					/>
+				</h4>
+				<h4>
+					Annual Energy Savings: ${getEnergySavings(this.props.ac_annual, this.props.utility_rate)}
+				</h4>
+				<h4>
+					Payback Period: {getPaybackPeriod(this.props.roofFaces, this.props.ac_annual, this.props.utility_rate)}years
+				</h4>
+
+				<Link to = '/design'>
+					Design New System
+				</Link>
 
 			</div>
 		);
@@ -74,9 +96,15 @@ function mapStateToProps(state) {
 	return {
 		roofFaces: state.roofFaces,
 		ac_monthly: state.analysis.ac_monthly,
-		ac_annual: state.analysis.ac_annual
+		ac_annual: state.analysis.ac_annual,
+		utility_rate: state.analysis.utility_rate,
+		initialValues: state.analysis
 	}
 }
 
-export default connect(mapStateToProps, {evaluatePerformance})(Analysis);
+export default connect(mapStateToProps, {evaluatePerformance, updateUtilityRate})(reduxForm({
+	form: 'UtilityRateForm',
+	enableReinitialize: true
+})(Analysis));
+
 
